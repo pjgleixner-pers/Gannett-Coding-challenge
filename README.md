@@ -1,7 +1,7 @@
 # Gannett-Coding-challenge
 
 ## Acceptance Criteria
- * () The produce database is a single, in memory array of data and supports reads and writes
+ * (✔️) The produce database is a single, in memory array of data and supports reads and writes
  * () Supports adding more than one new produce item at a time
  * () The produce includes name, produce code, and unit price
  * () The produce name is alphanumeric and case insensitive
