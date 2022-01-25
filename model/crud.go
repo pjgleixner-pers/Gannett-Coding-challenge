@@ -11,7 +11,7 @@ import (
 )
 
 func GetItems(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("GET /items: GetItems")
+	fmt.Println("GET /item: GetItems")
 	json.NewEncoder(w).Encode(data.Items)
 }
 
