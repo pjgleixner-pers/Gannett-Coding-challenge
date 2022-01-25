@@ -7,7 +7,6 @@ import (
 
 	"gannett.com/api.grocery/data"
 	"gannett.com/api.grocery/views"
-	"github.com/gin-gonic/gin"
 	"github.com/gorilla/mux"
 )
 
@@ -42,30 +41,33 @@ func GetItemByID(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(foundItem)
 }
 
-func PostItems(c *gin.Context) {
-	//var newItems controller.
-	var newItems views.Item
-	//TODO: make acept many inputs
-	// Call BindJSON to bind the received JSON to
-	// newItem.
-	if err := c.BindJSON(&newItems); err != nil {
-		return
-	}
+func PostItems(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("POST /items: PostItems")
 
-	// Add the new Item to the slice.
-	data.Items = append(data.Items, newItems)
-	c.IndentedJSON(http.StatusCreated, newItems)
 }
 
-func DeleteItems(c *gin.Context) {
-	id := c.Param("id")
+func DeleteItems(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("DELETE /items/{id}: DeleteItems")
+	handlerChannel := make(chan bool)
 
-	for i, a := range data.Items {
-		if a.ID == id {
-			data.Items = append(data.Items[:i], data.Items[i+1:]...) //I dont get how it works
-			c.IndentedJSON(http.StatusOK, a)
-			return
+	go func() {
+		vars := mux.Vars(r)
+		id := vars["id"]
+		var deletedItem bool = false
+		for index, item := range data.Items {
+			if item.ID == id {
+				data.Items = append(data.Items[:index], data.Items[index+1:]...)
+				deletedItem = true
+				break
+			}
 		}
+		handlerChannel <- deletedItem
+	}()
+
+	itemDeleted := <-handlerChannel
+	if itemDeleted {
+		w.WriteHeader(http.StatusNoContent)
+	} else {
+		w.WriteHeader(http.StatusNotFound)
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "item not found"})
 }
