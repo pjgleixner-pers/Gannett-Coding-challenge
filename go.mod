@@ -2,7 +2,10 @@ module gannett.com/api.grocery
 
 go 1.17
 
-require github.com/gin-gonic/gin v1.7.7
+require (
+	github.com/gin-gonic/gin v1.7.7
+	github.com/gorilla/mux v1.8.0
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect

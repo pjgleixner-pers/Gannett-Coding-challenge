@@ -1,18 +1,22 @@
 package controller
 
 import (
+	"log"
+	"net/http"
+
 	"gannett.com/api.grocery/model"
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
 )
 
-func Register() *gin.Engine {
-	router := gin.Default()
-	router.GET("/items", model.GetAlbums)
-	router.GET("/items/:id", model.GetAlbumByID)
-	router.POST("/items", model.PostAlbums)
-	router.DELETE("/items/:id", model.DeleteAlbums)
+func Register() *mux.Router {
 
-	router.Run("localhost:8080")
+	router := mux.NewRouter().StrictSlash(true)
+	router.HandleFunc("/items", model.GetItems)
+	router.HandleFunc("/items/{id}", model.GetItemByID)
+	/* router.HandleFunc("/items", model.PostItems()).Methods("POST")
+	router.HandleFunc("/items/:id", model.DeleteItems()).Methods("DELETE") */
+
+	log.Fatal(http.ListenAndServe(":8080", router))
 
 	return router
 }
