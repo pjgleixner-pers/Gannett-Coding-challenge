@@ -5,7 +5,7 @@ The produce includes name, produce code, and unit price  {cm:2022-01-25T20:22:55
 The produce name is alphanumeric and case insensitive  {cm:2022-01-25T20:22:56}
 The produce codes are sixteen characters long, with dashes separating each four character group  {cm:2022-01-25T20:22:58}
 The produce codes are alphanumeric and case insensitive  {cm:2022-01-25T20:22:59}
-The produce unit price is a number with up to 2 decimal places () 
+The produce unit price is a number with up to 2 decimal places ()  {cm:2022-01-25T22:23:01}
 Error handling (GET nonexistent produce)  {cm:2022-01-25T20:23:02}
 Error handling (bad POST payload, etc.)  {cm:2022-01-25T20:23:03}
 The API is RESTful  {cm:2022-01-25T20:23:04}
