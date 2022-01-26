@@ -1,8 +1,10 @@
 package model
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"gannett.com/api.grocery/data"
@@ -43,7 +45,48 @@ func GetItemByID(w http.ResponseWriter, r *http.Request) {
 
 func PostItems(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("POST /items: PostItems")
+	reqBody, _ := ioutil.ReadAll(r.Body)
+	x := bytes.TrimLeft(reqBody, " \t\r\n")
+	isArray := len(x) > 0 && x[0] == '['
 
+	itemsToCreate := make([]views.Item, 0)
+
+	if isArray {
+		decoder := json.NewDecoder(bytes.NewBufferString(string(reqBody)))
+		err := decoder.Decode(&itemsToCreate)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		for _, item := range itemsToCreate {
+			err := views.Validate(r, item)
+			if err != nil {
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+		}
+	} else {
+		var createdItem views.Item
+		json.Unmarshal(reqBody, &createdItem)
+		err := views.Validate(r, createdItem)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		itemsToCreate = append(itemsToCreate, createdItem)
+	}
+
+	handlerChannel := make(chan []views.Item)
+	go func(items []views.Item) {
+		for _, item := range items {
+			data.Items = append(data.Items, item)
+		}
+		handlerChannel <- items
+	}(itemsToCreate)
+
+	itemsCreated := <-handlerChannel
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(itemsCreated)
 }
 
 func DeleteItems(w http.ResponseWriter, r *http.Request) {
