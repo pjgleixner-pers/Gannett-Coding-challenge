@@ -79,6 +79,7 @@ func PostItems(w http.ResponseWriter, r *http.Request) {
 	handlerChannel := make(chan []views.Item)
 	go func(items []views.Item) {
 		for _, item := range items {
+			//TODO: validate if item exist
 			data.Items = append(data.Items, item)
 		}
 		handlerChannel <- items

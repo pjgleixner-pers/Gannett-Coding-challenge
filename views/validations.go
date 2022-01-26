@@ -3,6 +3,7 @@ package views
 import (
 	"errors"
 	"net/http"
+	"regexp"
 
 	"github.com/asaskevich/govalidator"
 )
@@ -49,11 +50,16 @@ func (item Item) Validate(r *http.Request) error {
 		return ErrInvalidName
 	}
 
-	if !govalidator.IsFloat(item.Price) {
+	if !IsFloat2decimals(item.Price) {
 		return ErrInvalidUnitPrice
 	}
 
 	return nil
+}
+
+func IsFloat2decimals(str string) bool {
+	rxFloat2decimals := regexp.MustCompile("^\\d+\\.\\d{0,2}$")
+	return str != "" && rxFloat2decimals.MatchString(str)
 }
 
 func Validate(r *http.Request, v ItemValidation) error {
