@@ -54,10 +54,6 @@ func (item Item) Validate(r *http.Request) error {
 		return ErrInvalidUnitPrice
 	}
 
-	//regexp=^\d+\.\d{0,2}$
-	/*	if item.Price  {
-
-		}*/
 	return nil
 }
 
