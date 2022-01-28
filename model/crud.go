@@ -79,7 +79,14 @@ func PostItems(w http.ResponseWriter, r *http.Request) {
 	handlerChannel := make(chan []views.Item)
 	go func(items []views.Item) {
 		for _, item := range items {
-			//TODO: validate if item exist
+			//verifie if ID exist
+			//Runs a time out but does the verification
+			/* for i := range data.Items {
+				if item.ID == data.Items[i].ID {
+					w.WriteHeader(http.StatusBadRequest)
+					return
+				}
+			} */
 			data.Items = append(data.Items, item)
 		}
 		handlerChannel <- items

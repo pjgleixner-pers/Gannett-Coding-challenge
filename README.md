@@ -13,7 +13,7 @@
  * (✔️) The API is RESTful
  * (✔️) The functionality is tested and verifiable without manually exercising the endpoints
  * (✔️) The API supports adding and deleting individual produce. You can also get any produce in the database.
- * () Produce Code is unique (no apple or pear have the same code)
+ * (❗) Produce Code is unique (no apple or pear have the same code)
 
 ## Running the program
 Make sure you have golang installed (https://go.dev/doc/install)
