@@ -30,6 +30,7 @@ Make sure you have installed the Go extension
 3. to stop the program on top should appear a red square (🟥)
 
 ## Starting Data
+```
 [
     {
         "ID": "A12T-4GH7-QPL9-3N4M",
@@ -52,6 +53,7 @@ Make sure you have installed the Go extension
         "Price": "3.59"
     }
 ]
+```
 ## Supported Endpoints
 ### GET
 #### Show all Items:
