@@ -85,8 +85,8 @@ curl --request GET --url localhost:8080/item/A12T-4GH7-QPL9-3N4M
 ```
 #### Error handling:
 If it is run with an Id that does not exist in the data will trow a 404 Not Found
-Example:
-item id = 1234-1234-1234-1234 doesn't exist in this example
+Example: <br />
+item id = 1234-1234-1234-1234 doesn't exist in this example <br />
 Request:
 ```
 curl -i --request GET --url localhost:8080/item/1234-1234-1234-1234
@@ -138,8 +138,8 @@ Content-Type: text/plain; charset=utf-8
 [{"ID":"QWER-1234-TYUI-5678","Name":"Apple","Price":"1.99"},{"ID":"ZXCV-5678-VBNM-9012","Name":"Tomato","Price":"0.99"}]
 ```    
 #### Error handling:
-If you send wrong data (ID with no format "AAAA-AAAA-AAAA-AAAA" or Price with no two decimal places) will trow a 400 Bad Request
-Example:
+If you send wrong data (ID with no format "AAAA-AAAA-AAAA-AAAA" or Price with no two decimal places) will trow a 400 Bad Request <br />
+Example: <br />
 Request:
 ```
 curl -i -X POST -H "Content-type:application/json" --data "{\"ID\":\"QWER-1234-TYUI\",\"Name\":\"Apple\",\"Price\":\"1.99\"}" localhost:8080/items
@@ -165,9 +165,9 @@ curl -i --request DELETE --url localhost:8080/items/A12T-4GH7-QPL9-3N4M
 HTTP/1.1 204 No Content
 ```
 #### Error handling:
-If it is run with an Id that does not exist in the data will trow a 404 Not Found
-Example:
-item id = 1234-1234-1234-1234 doesn't exist in this example
+If it is run with an Id that does not exist in the data will trow a 404 Not Found <br />
+Example: <br />
+item id = 1234-1234-1234-1234 doesn't exist in this example <br />
 Request:
 ```
 curl -i --request DELETE --url localhost:8080/items/1234-1234-1234-1234
