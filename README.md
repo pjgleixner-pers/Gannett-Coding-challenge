@@ -102,57 +102,82 @@ Content-Type: text/plain; charset=utf-8
 ```
 ### POST
 #### Single Post:
-* Endpoint: 
-    /items
+* Endpoint:
+```
+/items
+```
 * Example Request:
-    curl -i -X POST -H "Content-type:application/json" --data "{\"ID\":\"QWER-1234-TYUI-5678\",\"Name\":\"Apple\",\"Price\":\"1.99\"}" localhost:8080/items
+```
+curl -i -X POST -H "Content-type:application/json" --data "{\"ID\":\"QWER-1234-TYUI-5678\",\"Name\":\"Apple\",\"Price\":\"1.99\"}" localhost:8080/items
+```
 * Expected Response:
-    HTTP/1.1 201 Created
-    Date: Thu, 27 Jan 2022 02:12:00 GMT
-    Content-Length: 61
-    Content-Type: text/plain; charset=utf-8
+```
+HTTP/1.1 201 Created
+Date: Thu, 27 Jan 2022 02:12:00 GMT
+Content-Length: 61
+Content-Type: text/plain; charset=utf-8
 
-    [{"ID":"QWER-1234-TYUI-5678","Name":"Apple","Price":"1.99"}]
+[{"ID":"QWER-1234-TYUI-5678","Name":"Apple","Price":"1.99"}]
+```
 #### Multiple Post:
-* Endpoint: 
-    /items
+* Endpoint:
+```
+/items
+```
 * Example Request:
-    curl -i -X POST -H "Content-type:application/json" --data "[{\"ID\":\"QWER-1234-TYUI-5678\",\"Name\":\"Apple\",\"Price\":\"1.99\"},{\"ID\":\"ZXCV-5678-VBNM-9012\",\"Name\":\"Tomato\",\"Price\":\"0.99\"}]" localhost:8080/items
+```
+curl -i -X POST -H "Content-type:application/json" --data "[{\"ID\":\"QWER-1234-TYUI-5678\",\"Name\":\"Apple\",\"Price\":\"1.99\"},{\"ID\":\"ZXCV-5678-VBNM-9012\",\"Name\":\"Tomato\",\"Price\":\"0.99\"}]" localhost:8080/items
+```
 * Expected Response:
-   HTTP/1.1 201 Created
-    Date: Thu, 27 Jan 2022 02:19:00 GMT
-    Content-Length: 121
-    Content-Type: text/plain; charset=utf-8
+```
+HTTP/1.1 201 Created
+Date: Thu, 27 Jan 2022 02:19:00 GMT
+Content-Length: 121
+Content-Type: text/plain; charset=utf-8
 
-    [{"ID":"QWER-1234-TYUI-5678","Name":"Apple","Price":"1.99"},{"ID":"ZXCV-5678-VBNM-9012","Name":"Tomato","Price":"0.99"}]     
+[{"ID":"QWER-1234-TYUI-5678","Name":"Apple","Price":"1.99"},{"ID":"ZXCV-5678-VBNM-9012","Name":"Tomato","Price":"0.99"}]
+```    
 #### Error handling:
 If you send wrong data (ID with no format "AAAA-AAAA-AAAA-AAAA" or Price with no two decimal places) will trow a 400 Bad Request
 Example:
-Request: 
-    curl -i -X POST -H "Content-type:application/json" --data "{\"ID\":\"QWER-1234-TYUI\",\"Name\":\"Apple\",\"Price\":\"1.99\"}" localhost:8080/items
-Respponse: 
-    HTTP/1.1 400 Bad Request
-    Date: Thu, 27 Jan 2022 02:24:40 GMT
-    Content-Length: 0
+Request:
+```
+curl -i -X POST -H "Content-type:application/json" --data "{\"ID\":\"QWER-1234-TYUI\",\"Name\":\"Apple\",\"Price\":\"1.99\"}" localhost:8080/items
+```
+Respponse:
+```
+HTTP/1.1 400 Bad Request
+Date: Thu, 27 Jan 2022 02:24:40 GMT
+Content-Length: 0
+```
 
 ### DELETE
-* Endpoint: 
-    /items/{id}
+* Endpoint:
+```
+/items/{id}
+```
 * Example Request:
-    curl -i --request DELETE --url localhost:8080/items/A12T-4GH7-QPL9-3N4M
+```
+curl -i --request DELETE --url localhost:8080/items/A12T-4GH7-QPL9-3N4M
+```
 * Expected Response:
-    HTTP/1.1 204 No Content
+```
+HTTP/1.1 204 No Content
+```
 #### Error handling:
 If it is run with an Id that does not exist in the data will trow a 404 Not Found
 Example:
 item id = 1234-1234-1234-1234 doesn't exist in this example
-Request: 
-    curl -i --request DELETE --url localhost:8080/items/1234-1234-1234-1234
+Request:
+```
+curl -i --request DELETE --url localhost:8080/items/1234-1234-1234-1234
+```
 Respponse:
-    HTTP/1.1 404 Not Found
-    Date: Thu, 27 Jan 2022 01:30:09 GMT
-    Content-Length: 0
-
+```
+HTTP/1.1 404 Not Found
+Date: Thu, 27 Jan 2022 01:30:09 GMT
+Content-Length: 0
+```
 ## Testing
 If you are using VSCode go to the file main_test.go. There will be the test functions TestShowItems, TestShowItemById, TestDeleteItem, TestCreateItem and TestCreateItems. Above each one will be the option to *run test* or *debug test*. All test in the initial state should pass unless you change the *req, err* variable or the *itemPayload* variable.
 
