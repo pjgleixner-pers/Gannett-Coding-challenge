@@ -1,15 +1,21 @@
-FROM golang:1.16-alpine
+#Ensures Docker pulls the offical Go image
+FROM golang:1.17.6 AS GO_BUILD
 
-WORKDIR /app
+ENV CGO_ENABLED 0
+#copies content over
+COPY . /go-app
+#sets the working directory.
+WORKDIR /go-app
+#builds your app into a binary
+RUN go build -o server
 
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+#uses alpine as our runner image in which our GO application will run
+FROM alpine:3.15
 
-COPY *.go ./
-
-RUN go build -o /gannett-coding-challenge
-
+WORKDIR /go-app
+#copies the binary built earlier into the image
+COPY --from=GO_BUILD /go-app/server /go-app/server
+#exposes application over port 8080
 EXPOSE 8080
-
-CMD [ "/gannett-coding-challenge" ]
+#sets the default command to run when the container is run
+CMD ["./server"]
