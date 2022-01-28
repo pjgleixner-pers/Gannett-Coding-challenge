@@ -57,33 +57,49 @@ Make sure you have installed the Go extension
 ## Supported Endpoints
 ### GET
 #### Show all Items:
-* Endpoint: 
-    /item
+* Endpoint:
+```
+/item
+```
 * Example Request:
-    curl --request GET --url localhost:8080/item
+```
+curl --request GET --url localhost:8080/item
+```
 * Expected Response:
-    [{"ID":"A12T-4GH7-QPL9-3N4M","Name":"Lettuce","Price":"3.46"},{"ID":"E5T6-9UI3-TH15-QR88","Name":"Peach","Price":"2.99"},{"ID":"YRT6-72AS-K736-L4AR","Name":"Green Pepper","Price":"0.79"},{"ID":"TQ4C-VV6T-75ZX-1RMR","Name":"Gala Apple","Price":"3.59"}]
+```
+[{"ID":"A12T-4GH7-QPL9-3N4M","Name":"Lettuce","Price":"3.46"},{"ID":"E5T6-9UI3-TH15-QR88","Name":"Peach","Price":"2.99"},{"ID":"YRT6-72AS-K736-L4AR","Name":"Green Pepper","Price":"0.79"},{"ID":"TQ4C-VV6T-75ZX-1RMR","Name":"Gala Apple","Price":"3.59"}]
+```
 
 #### Show item by ID:
-* Endpoint: 
-    /item/{id}
+* Endpoint:
+```
+/item/{id}
+```
 * Example Request:
-    curl --request GET --url localhost:8080/item/A12T-4GH7-QPL9-3N4M
+```
+curl --request GET --url localhost:8080/item/A12T-4GH7-QPL9-3N4M
+```
 * Expected Response:
-    {"ID":"A12T-4GH7-QPL9-3N4M","Name":"Lettuce","Price":"3.46"}
+```
+{"ID":"A12T-4GH7-QPL9-3N4M","Name":"Lettuce","Price":"3.46"}
+```
 #### Error handling:
 If it is run with an Id that does not exist in the data will trow a 404 Not Found
 Example:
 item id = 1234-1234-1234-1234 doesn't exist in this example
-Request: 
-    curl -i --request GET --url localhost:8080/item/1234-1234-1234-1234
+Request:
+```
+curl -i --request GET --url localhost:8080/item/1234-1234-1234-1234
+```
 Respponse:
-    HTTP/1.1 404 Not Found
-    Date: Thu, 27 Jan 2022 01:21:29 GMT
-    Content-Length: 31
-    Content-Type: text/plain; charset=utf-8
+```
+HTTP/1.1 404 Not Found
+Date: Thu, 27 Jan 2022 01:21:29 GMT
+Content-Length: 31
+Content-Type: text/plain; charset=utf-8
     
-    {"ID":"","Name":"","Price":""}
+{"ID":"","Name":"","Price":""}
+```
 ### POST
 #### Single Post:
 * Endpoint: 
