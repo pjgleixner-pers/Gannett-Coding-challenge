@@ -24,9 +24,11 @@ func GetItemByID(w http.ResponseWriter, r *http.Request) {
 	go func() {
 		vars := mux.Vars(r)
 		id := vars["id"]
+		//Picks the Id form the url
 		var foundItem views.Item
 		for index, item := range data.Items {
 			if item.ID == id {
+				//checks if the item id exist and place it in fountItem
 				foundItem = data.Items[index]
 				break
 			}
@@ -40,17 +42,20 @@ func GetItemByID(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(http.StatusNotFound)
 	}
+	//encodes the foundItem
 	json.NewEncoder(w).Encode(foundItem)
 }
 
 func PostItems(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("POST /items: PostItems")
 	reqBody, _ := ioutil.ReadAll(r.Body)
+	//takes the JSON payload
 	x := bytes.TrimLeft(reqBody, " \t\r\n")
 	isArray := len(x) > 0 && x[0] == '['
-
+	//prepares to create an item
 	itemsToCreate := make([]views.Item, 0)
 
+	//checks if the payload is a single JSON or an array os JSONs
 	if isArray {
 		decoder := json.NewDecoder(bytes.NewBufferString(string(reqBody)))
 		err := decoder.Decode(&itemsToCreate)
@@ -59,6 +64,7 @@ func PostItems(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		for _, item := range itemsToCreate {
+			//check items in the array validating the data
 			err := views.Validate(r, item)
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
@@ -73,6 +79,7 @@ func PostItems(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+		//itemsToCreate becomes the single JSON payload
 		itemsToCreate = append(itemsToCreate, createdItem)
 	}
 
@@ -87,6 +94,7 @@ func PostItems(w http.ResponseWriter, r *http.Request) {
 					return
 				}
 			} */
+			//apends the data JSON with the new items
 			data.Items = append(data.Items, item)
 		}
 		handlerChannel <- items
@@ -106,7 +114,9 @@ func DeleteItems(w http.ResponseWriter, r *http.Request) {
 		id := vars["id"]
 		var deletedItem bool = false
 		for index, item := range data.Items {
+			//search for the id of the item
 			if item.ID == id {
+				//deletes that item
 				data.Items = append(data.Items[:index], data.Items[index+1:]...)
 				deletedItem = true
 				break

@@ -26,6 +26,7 @@ func (item Item) Validate(r *http.Request) error {
 		return ErrInvalidItemId
 	}
 	chars := []rune(item.ID)
+	//checks is an alphanumeric data as AAAA-AAAA-AAAA-AAAA
 	if !govalidator.IsAlphanumeric(string(chars[0:3])) {
 		return ErrInvalidItemId
 	}
@@ -41,15 +42,15 @@ func (item Item) Validate(r *http.Request) error {
 	if !govalidator.IsAlphanumeric(string(chars[15:18])) {
 		return ErrInvalidItemId
 	}
-
+	//check if ther is a name
 	if govalidator.IsNull(item.Name) {
 		return ErrInvalidName
 	}
-
+	//checks if the name is alphanumeric
 	if !govalidator.IsAlphanumeric(item.Name) {
 		return ErrInvalidName
 	}
-
+	//checks if the Prices has 2 decimals
 	if !IsFloat2decimals(item.Price) {
 		return ErrInvalidUnitPrice
 	}
@@ -58,7 +59,7 @@ func (item Item) Validate(r *http.Request) error {
 }
 
 func IsFloat2decimals(str string) bool {
-	rxFloat2decimals := regexp.MustCompile("^\\d+\\.\\d{0,2}$")
+	rxFloat2decimals := regexp.MustCompile(`^\d+\.\d{0,2}$`)
 	return str != "" && rxFloat2decimals.MatchString(str)
 }
 
